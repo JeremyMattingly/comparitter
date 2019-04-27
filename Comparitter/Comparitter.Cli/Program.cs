@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,21 +13,10 @@ namespace Comparitter.Cli
         {
             string consumerKey, consumerSecret, userAccessToken, userAccessSecret;
 
-            Console.WriteLine("Enter Twitter Consumer Key:");
-            consumerKey = Console.ReadLine();
-
-            Console.WriteLine("Enter Twitter Consumer Secret:");
-            consumerSecret = Console.ReadLine();
-
-            Console.WriteLine("Enter Twitter User Access Token:");
-            userAccessToken = Console.ReadLine();
-
-            Console.WriteLine("Enter Twitter User Access Secret:");
-            userAccessSecret = Console.ReadLine();
-
-            Console.WriteLine();
-            Console.WriteLine("Retrieving Tweets...");
-            Console.WriteLine();
+            consumerKey = ConfigurationManager.AppSettings["TwitterConsumerKey"];
+            consumerSecret = ConfigurationManager.AppSettings["TwitterConsumerSecret"];
+            userAccessToken = ConfigurationManager.AppSettings["TwitterUserAccessToken"];
+            userAccessSecret = ConfigurationManager.AppSettings["TwitterUserAccessSecret"];
 
             var credentials = new TwitterAgent.Credentials { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret, UserAccessToken = userAccessToken, UserAccessSecret = userAccessSecret };
 
