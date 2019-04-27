@@ -46,7 +46,7 @@ namespace Comparitter.TwitterAgent
             return tweetsToReturn;
         }
 
-        public static List<string> SearchByPhrase(string phrase)
+        public static List<string> GetTopThreeTweetTextByPhrase(string phrase)
         {
             var matchingTweets = Tweetinvi.Search.SearchTweets(phrase).ToList();
 
@@ -58,6 +58,11 @@ namespace Comparitter.TwitterAgent
             }
 
             return tweetsToReturn;
+        }
+
+        public static IEnumerable<Tweetinvi.Models.ITweet> SearchByPhrase(string phrase)
+        {
+            return Tweetinvi.Search.SearchTweets(phrase).ToList();
         }
 
         #endregion Public Methods

@@ -26,20 +26,37 @@ namespace Comparitter.Cli
                         GetLast5TweetsOfConfiguredUser();
                         break;
                     case 2:
-                        Console.Clear();
                         Console.WriteLine("Enter search phrase");
                         string searchPhrase = Console.ReadLine();
                         SearchForPhrase(searchPhrase);
                         break;
+                    case 3:
+                        Console.WriteLine("Enter phrase 1:");
+                        string phrase1 = Console.ReadLine();
+
+                        Console.WriteLine();
+                        Console.WriteLine("Enter phrase 2:");
+                        string phrase2 = Console.ReadLine();
+                        Console.WriteLine();
+
+                        ComparePhrasePopularity(phrase1, phrase2);
+                        break;
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Press any key to continue...");
+                Console.WriteLine("Press any Enter to continue...");
                 Console.ReadLine();
                 RunMenu();
             }
 
             return;
+        }
+
+        private static void ComparePhrasePopularity(string phrase1, string phrase2)
+        {
+            var compareResults = Comparitter.Compare.Compare.CompareByAppearanceCount(phrase1, phrase2);
+
+            Console.WriteLine(compareResults);
         }
 
         private static void RunMenu()
@@ -50,6 +67,7 @@ namespace Comparitter.Cli
             Console.WriteLine("0. Exit.");
             Console.WriteLine("1. Return last 5 tweets of the user whose credentials are stored in configuration.");
             Console.WriteLine("2. Search for a phrase.");
+            Console.WriteLine("3. Compare popularity for 2 phrases.");
 
             Console.WriteLine();
             Console.WriteLine("Enter menu item number:");
@@ -58,7 +76,7 @@ namespace Comparitter.Cli
 
         private static void SearchForPhrase(string searchPhrase)
         {
-            var tweets = Comparitter.TwitterAgent.Search.SearchByPhrase(searchPhrase);
+            var tweets = Comparitter.TwitterAgent.Search.GetTopThreeTweetTextByPhrase(searchPhrase);
 
             foreach (var tweet in tweets)
             {

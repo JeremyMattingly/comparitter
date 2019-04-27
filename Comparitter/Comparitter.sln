@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.TwitterAgent", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Cli", "Comparitter.Cli\Comparitter.Cli.csproj", "{A0355671-A83E-4C2F-9061-1D688C48C18D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Compare", "Comparitter.Compare\Comparitter.Compare.csproj", "{AB0A7EC0-B661-40F9-AD72-5DA26B845848}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
