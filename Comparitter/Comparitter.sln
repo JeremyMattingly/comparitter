@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComparitterWeb", "ComparitterWeb\ComparitterWeb.csproj", "{7635014E-FF2B-413A-B1C6-D03A7C8811D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.TwitterAgent", "Comparitter.TwitterAgent\Comparitter.TwitterAgent.csproj", "{5BC37C86-C389-409A-B547-63C29A1D95EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Cli", "Comparitter.Cli\Comparitter.Cli.csproj", "{A0355671-A83E-4C2F-9061-1D688C48C18D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7635014E-FF2B-413A-B1C6-D03A7C8811D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7635014E-FF2B-413A-B1C6-D03A7C8811D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7635014E-FF2B-413A-B1C6-D03A7C8811D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BC37C86-C389-409A-B547-63C29A1D95EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BC37C86-C389-409A-B547-63C29A1D95EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BC37C86-C389-409A-B547-63C29A1D95EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BC37C86-C389-409A-B547-63C29A1D95EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0355671-A83E-4C2F-9061-1D688C48C18D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
