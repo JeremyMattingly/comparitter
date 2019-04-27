@@ -16,8 +16,6 @@ namespace Comparitter.Cli
         {
             RunMenu();
 
-            TwitterAgent.Credentials credentials = GetTwitterCredentials();
-
             while (menuItem != 0)
             {
                 Console.Clear();
@@ -25,13 +23,13 @@ namespace Comparitter.Cli
                 switch (menuItem)
                 {
                     case 1:
-                        GetLast5TweetsOfConfiguredUser(credentials);
+                        GetLast5TweetsOfConfiguredUser();
                         break;
                     case 2:
                         Console.Clear();
                         Console.WriteLine("Enter search phrase");
                         string searchPhrase = Console.ReadLine();
-                        SearchForPhrase(credentials, searchPhrase);
+                        SearchForPhrase(searchPhrase);
                         break;
                 }
 
@@ -58,9 +56,9 @@ namespace Comparitter.Cli
             menuItem = int.Parse(Console.ReadLine());
         }
 
-        private static void SearchForPhrase(TwitterAgent.Credentials credentials, string searchPhrase)
+        private static void SearchForPhrase(string searchPhrase)
         {
-            var tweets = Comparitter.TwitterAgent.Search.SearchByPhrase(credentials, searchPhrase);
+            var tweets = Comparitter.TwitterAgent.Search.SearchByPhrase(searchPhrase);
 
             foreach (var tweet in tweets)
             {
@@ -68,9 +66,9 @@ namespace Comparitter.Cli
             }
         }
 
-        private static void GetLast5TweetsOfConfiguredUser(TwitterAgent.Credentials credentials)
+        private static void GetLast5TweetsOfConfiguredUser()
         {
-            var tweets = Comparitter.TwitterAgent.Search.FirstContact(credentials);
+            var tweets = Comparitter.TwitterAgent.Search.FirstContact();
 
             foreach (var tweet in tweets)
             {
@@ -78,17 +76,5 @@ namespace Comparitter.Cli
             }
         }
 
-        private static TwitterAgent.Credentials GetTwitterCredentials()
-        {
-            string consumerKey, consumerSecret, userAccessToken, userAccessSecret;
-
-            consumerKey = ConfigurationManager.AppSettings["TwitterConsumerKey"];
-            consumerSecret = ConfigurationManager.AppSettings["TwitterConsumerSecret"];
-            userAccessToken = ConfigurationManager.AppSettings["TwitterUserAccessToken"];
-            userAccessSecret = ConfigurationManager.AppSettings["TwitterUserAccessSecret"];
-
-            var credentials = new TwitterAgent.Credentials { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret, UserAccessToken = userAccessToken, UserAccessSecret = userAccessSecret };
-            return credentials;
-        }
     }
 }
