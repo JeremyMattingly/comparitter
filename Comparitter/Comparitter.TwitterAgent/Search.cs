@@ -28,5 +28,21 @@ namespace Comparitter.TwitterAgent
 
             return tweetsToReturn;
         }
+
+        public static List<string> SearchByPhrase(Credentials credentials, string phrase)
+        {
+            Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
+
+            var matchingTweets = Tweetinvi.Search.SearchTweets(phrase).ToList();
+
+            List<string> tweetsToReturn = new List<string>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                tweetsToReturn.Add(matchingTweets[i].Text);
+            }
+
+            return tweetsToReturn;
+        }
     }
 }
