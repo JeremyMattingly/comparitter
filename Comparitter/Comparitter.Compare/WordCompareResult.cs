@@ -229,9 +229,23 @@ namespace Comparitter.Compare
             item.mostPopularWordSearchResultID = row.Field<int>("MostPopularWordSearchResultID");
             item.leastPopularWordSearchResultID = row.Field<int>("LeastPopularWordSearchResultID");
             item.WordsAreEquallyPopular = row.Field<bool>("WordsAreEquallyPopular");
-            item.equallyPopularWordSearchResult1ID = row.Field<int>("EquallyPopularWordSearchResult1ID");
-            item.equallyPopularWordSearchResult2ID = row.Field<int>("EquallyPopularWordSearchResult2ID");
-            item.SearchElapsedSeconds = row.Field<float>("SearchElapsedSeconds");
+            if (row["EquallyPopularWordSearchResult1ID"] != DBNull.Value)
+            {
+                item.equallyPopularWordSearchResult1ID = row.Field<int>("EquallyPopularWordSearchResult1ID");
+            }
+            else
+            {
+                item.equallyPopularWordSearchResult1ID = -1;
+            }
+            if (row["EquallyPopularWordSearchResult2ID"] != DBNull.Value)
+            {
+                item.equallyPopularWordSearchResult2ID = row.Field<int>("EquallyPopularWordSearchResult2ID");
+            }
+            else
+            {
+                item.equallyPopularWordSearchResult2ID = -1;
+            }
+            item.SearchElapsedSeconds = row.Field<double>("SearchElapsedSeconds");
             item.CompareDateTime = row.Field<DateTime>("CompareDateTime");
         }
 

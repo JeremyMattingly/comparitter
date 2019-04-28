@@ -32,23 +32,25 @@ namespace Comparitter.Compare
             wordCompareResult.Save();
         }
 
-        public static List<string> RetrieveWordCompareHistory()
+        public static List<WordCompareResult> RetrieveWordCompareHistory()
         {
             var cmd = Database.GenericDataAccess.CreateCommand(Database.Utility.ConnectionString);
 
-            cmd.CommandText = @"SELECT * FROM WordCompareResult";
+            cmd.CommandText = @"SELECT * 
+                                FROM WordCompareResult
+                                ORDER BY CompareDateTime DESC";
 
             var results = Database.GenericDataAccess.ExecuteSelectCommand(cmd);
 
-            List<string> datesToReturn = new List<string>();
+            List<WordCompareResult> WordCompareResultsToReturn = new List<WordCompareResult>();
 
             foreach (DataRow result in results.Rows)
             {
-                string newDate = result.Field<DateTime>("CompareDateTime").ToShortDateString();
-                datesToReturn.Add(newDate);
+                WordCompareResult savedResult = WordCompareResult.RetrieveWordCompareResult(result.Field<int>("ID"));
+                WordCompareResultsToReturn.Add(savedResult);
             }
 
-            return datesToReturn;
+            return WordCompareResultsToReturn;
         }
     }
 }

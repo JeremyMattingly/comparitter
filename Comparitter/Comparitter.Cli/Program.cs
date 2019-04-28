@@ -129,7 +129,20 @@ namespace Comparitter.Cli
 
             foreach (var item in history)
             {
-                Console.WriteLine(item);
+                string text = item.CompareDateTime.ToString() + " WordsAreEquallyPopular: " + item.WordsAreEquallyPopular.ToString();
+
+                if (item.WordsAreEquallyPopular)
+                {
+                    text += " Word1: " + item.EquallyPopularResults[0].Word;
+                    text += " Word2: " + item.EquallyPopularResults[1].Word;
+                }
+                else
+                {
+                    text += " MostPopularWord: " + item.MostPopularWordSearchResult.Word;
+                    text += " LeastPopularWord: " + item.LeastPopularWordSearchResult.Word;
+                }
+
+                Console.WriteLine(text);
             }
         }
 

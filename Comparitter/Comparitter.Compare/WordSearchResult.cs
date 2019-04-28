@@ -183,8 +183,22 @@ namespace Comparitter.Compare
             item.ID = row.Field<int>("ID");
             item.Word = row.Field<string>("Word");
             item.AppearanceCount = row.Field<int>("AppearanceCount");
-            item.OldestTweetDateTime = row.Field<DateTime>("OldestTweetDateTime");
-            item.NewestTweetDateTime = row.Field<DateTime>("NewestTweetDateTime");
+            if (row["OldestTweetDateTime"] != DBNull.Value)
+            {
+                item.OldestTweetDateTime = row.Field<DateTime>("OldestTweetDateTime");
+            }
+            else
+            {
+                item.OldestTweetDateTime = null;
+            }
+            if (row["NewestTweetDateTime"] != DBNull.Value)
+            {
+                item.NewestTweetDateTime = row.Field<DateTime>("NewestTweetDateTime");
+            }
+            else
+            {
+                item.NewestTweetDateTime = null;
+            }
             item.SearchFailed = row.Field<bool>("SearchFailed");
             item.SearchDateTime = row.Field<DateTime>("SearchDateTime");
         }
