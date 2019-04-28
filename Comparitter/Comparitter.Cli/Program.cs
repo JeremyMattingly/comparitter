@@ -46,37 +46,62 @@ namespace Comparitter.Cli
 
         private static void ComparePhrasePopularity(string phrase1, string phrase2)
         {
-            var compareResults = Comparitter.Compare.Compare.CompareByAppearanceCount(phrase1, phrase2);
-
             string morePopularWordResultText;
 
+            try
+            {
+                Compare.WordCompareResult compareResults = Comparitter.Compare.Compare.CompareByAppearanceCount(phrase1, phrase2);
 
-            //if (tweetsContainingWord1.Count == phrase2Results.Count)
-            //{
-            //    morePopularWordResultText = string.Format(searchWord1 + " and " + searchWord2 + " are equally popular with {0} tweets.", tweetsContainingWord1.Count.ToString());
-            //}
-            //else if (tweetsContainingWord1.Count > phrase2Results.Count)
-            //{
-            //    morePopularWordResultText = string.Format(searchWord1 + " is more popular with {0} appearances. " + searchWord2 + " had {1} appearances. ", tweetsContainingWord1.Count.ToString(), phrase2Results.Count.ToString());
-            //}
-            //else
-            //{
-            //    morePopularWordResultText = string.Format(searchWord2 + " is more popular with {0} appearances. " + searchWord1 + " had {1} appearances. ", phrase2Results.Count.ToString(), tweetsContainingWord1.Count.ToString());
-            //}
+                if (compareResults.WordsAreEquallyPopular)
+                {
+                    morePopularWordResultText = string.Format(compareResults.EquallyPopularResults[0].Word + " and " + compareResults.EquallyPopularResults[1].Word + " are equally popular with {0} tweets.",
+                        compareResults.EquallyPopularResults[0].AppearanceCount.ToString());
+                }
+                else
+                {
+                    morePopularWordResultText = string.Format(compareResults.MostPopularWordSearchResult.Word + " is more popular with {0} appearances. " + compareResults.LeastPopularWordSearchResult.Word + " had {1} appearances. ",
+                        compareResults.MostPopularWordSearchResult.AppearanceCount.ToString(),
+                        compareResults.LeastPopularWordSearchResult.AppearanceCount.ToString());
 
-            //morePopularWordResultText = morePopularWordResultText + string.Format("{0}Phrase1 OldestDate: {1}. Phrase1 NewestDate: {2}", Environment.NewLine,
-            //    phrase1ResultsOldestTweetDateTime.ToShortDateString() + " " + phrase1ResultsOldestTweetDateTime.ToShortTimeString(),
-            //    phrase1ResultsNewestTweetDateTime.ToShortDateString() + " " + phrase1ResultsNewestTweetDateTime.ToShortTimeString());
-
-
-            //morePopularWordResultText = morePopularWordResultText + string.Format("{0}Phrase2 OldestDate: {1}. Phrase2 NewestDate: {2}", Environment.NewLine,
-            //    phrase2ResultsOldestTweetDateTime.ToShortDateString() + " " + phrase2ResultsOldestTweetDateTime.ToShortTimeString(),
-            //    phrase2ResultsNewestTweetDateTime.ToShortDateString() + " " + phrase2ResultsNewestTweetDateTime.ToShortTimeString());
+                    morePopularWordResultText += string.Format("{0}{1} Oldest Date: {2}",
+                        Environment.NewLine,
+                        compareResults.MostPopularWordSearchResult.Word,
+                        compareResults.MostPopularWordSearchResult.OldestTweetDateTime?.ToShortDateString() + " " + compareResults.MostPopularWordSearchResult.OldestTweetDateTime?.ToShortTimeString());
 
 
-            //morePopularWordResultText = morePopularWordResultText + string.Format("{0}{0}Search took {1} seconds.", Environment.NewLine, howLong.Elapsed.TotalSeconds.ToString());
+                    morePopularWordResultText += string.Format("{0}{1} Newest Date: {2}",
+                        Environment.NewLine,
+                        compareResults.MostPopularWordSearchResult.Word,
+                        compareResults.MostPopularWordSearchResult.NewestTweetDateTime?.ToShortDateString() + " " + compareResults.MostPopularWordSearchResult.NewestTweetDateTime?.ToShortTimeString());
 
-            Console.WriteLine(compareResults);
+                    morePopularWordResultText += string.Format("{0}{1} Oldest Date: {2}",
+                    Environment.NewLine,
+                    compareResults.LeastPopularWordSearchResult.Word,
+                    compareResults.LeastPopularWordSearchResult.OldestTweetDateTime?.ToShortDateString() + " " + compareResults.LeastPopularWordSearchResult.OldestTweetDateTime?.ToShortTimeString());
+
+                    morePopularWordResultText += string.Format("{0}{1} Newest Date: {2}",
+                    Environment.NewLine,
+                    compareResults.LeastPopularWordSearchResult.Word,
+                    compareResults.LeastPopularWordSearchResult.NewestTweetDateTime?.ToShortDateString() + " " + compareResults.LeastPopularWordSearchResult.NewestTweetDateTime?.ToShortTimeString());
+                }
+
+                morePopularWordResultText += string.Format("{0}{0}Search took {1} seconds.", Environment.NewLine, compareResults.SearchElapsedSeconds.ToString());
+            }
+            catch (ArgumentException ex)
+            {
+                morePopularWordResultText = "Your input isn't valid. One word, no spaces, up to 500 characters.";
+            }
+            catch (Comparitter.Compare.Exception.CompareException ex)
+            {
+                morePopularWordResultText = "Yikes! Twitter didn't like what we sent them, or they disappeared for a moment. Make sure your search words are not too common. I am cheap and didn't pay for access to return gobs and gobs of results.";
+            }
+            catch (Exception ex)
+            {
+                //TODO: Log This
+                morePopularWordResultText = "Shoot! Something didn't work right. Please try again later.";
+            }
+
+            Console.WriteLine(morePopularWordResultText);
         }
 
         private static void RunMenu()
