@@ -8,50 +8,127 @@ using System.Timers;
 
 namespace Comparitter.Compare
 {
+    public struct WordSearchResult
+    {
+        public string Word { get; set; }
+        public DateTime? OldestTweetDateTime { get; set; }
+        public DateTime? NewestTweetDateTime { get; set; }
+        public int AppearanceCount { get; set; }
+    }
+
+    public struct WordCompareResult
+    {
+        public WordSearchResult MostPopularWordSearchResult { get; set; }
+        public WordSearchResult LeastPopularWordSearchResult { get; set; }
+
+        public bool WordsAreEquallyPopular { get; set; }
+
+        public List<WordSearchResult> EquallyPopularResults { get; set; }
+
+        public double SearchElapsedSeconds { get; set; }
+    }
+
     public class Compare
     {
-        public static string CompareByAppearanceCount(string phrase1, string phrase2)
+        public static WordCompareResult CompareByAppearanceCount(string searchWord1, string searchWord2)
         {
-            Stopwatch howLong = new Stopwatch();
-            howLong.Start();
-
-            var phrase1Results = Comparitter.TwitterAgent.Search.SearchByPhrase(phrase1).ToList();
-            var phrase1ResultsOldestTweetDateTime = phrase1Results[phrase1Results.Count - 1].CreatedAt;
-            var phrase1ResultsNewestTweetDateTime = phrase1Results[0].CreatedAt;
-
-            var phrase2Results = Comparitter.TwitterAgent.Search.SearchByPhrase(phrase2).ToList();
-            var phrase2ResultsOldestTweetDateTime = phrase2Results[phrase2Results.Count - 1].CreatedAt;
-            var phrase2ResultsNewestTweetDateTime = phrase2Results[0].CreatedAt;
-
-            string morePopularPhrase;
-
-            if (phrase1Results.Count == phrase2Results.Count)
+            if (string.IsNullOrWhiteSpace(searchWord1))
             {
-                morePopularPhrase = string.Format(phrase1 + " and " + phrase2 + " are equally popular with {0} tweets.", phrase1Results.Count.ToString());
+                throw new ArgumentException("Phrase cannot be null or only whitespace.", nameof(searchWord1));
             }
-            else if (phrase1Results.Count > phrase2Results.Count)
+
+            if (searchWord1.Length > 500)
             {
-                morePopularPhrase = string.Format(phrase1 + " is more popular with {0} appearances. " + phrase2 + " had {1} appearances. ", phrase1Results.Count.ToString(), phrase2Results.Count.ToString());
+                throw new ArgumentOutOfRangeException(nameof(searchWord1), "Phrase is limited to 500 characters.");
+            }
+
+            if (searchWord1.Contains(" "))
+            {
+                throw new ArgumentException("SearchByWord() does not support searching for phrases. Only single words are allowed.", nameof(searchWord1));
+            }
+
+            if (string.IsNullOrWhiteSpace(searchWord2))
+            {
+                throw new ArgumentException("Phrase cannot be null or only whitespace.", nameof(searchWord2));
+            }
+
+            if (searchWord2.Length > 500)
+            {
+                throw new ArgumentOutOfRangeException(nameof(searchWord2), "Phrase is limited to 500 characters.");
+            }
+
+            if (searchWord2.Contains(" "))
+            {
+                throw new ArgumentException("SearchByWord() does not support searching for phrases. Only single words are allowed.", nameof(searchWord2));
+            }
+
+            WordCompareResult compareResultsToReturn = new WordCompareResult();
+
+            Stopwatch howLong = new Stopwatch();
+
+            try
+            {
+                howLong.Start();
+
+                WordSearchResult word1SearchResult = GetWordSearchResults(searchWord1);
+
+                WordSearchResult word2SearchResult = GetWordSearchResults(searchWord2);
+
+                howLong.Stop();
+                
+                if (word1SearchResult.AppearanceCount == word2SearchResult.AppearanceCount)
+                {
+                    compareResultsToReturn.WordsAreEquallyPopular = true;
+                    compareResultsToReturn.EquallyPopularResults = new List<WordSearchResult>() { word1SearchResult, word2SearchResult };
+                }
+                else if (word1SearchResult.AppearanceCount > word2SearchResult.AppearanceCount)
+                {
+                    compareResultsToReturn.WordsAreEquallyPopular = false;
+                    compareResultsToReturn.MostPopularWordSearchResult = word1SearchResult;
+                    compareResultsToReturn.LeastPopularWordSearchResult = word2SearchResult;
+                }
+                else
+                {
+                    compareResultsToReturn.WordsAreEquallyPopular = false;
+                    compareResultsToReturn.MostPopularWordSearchResult = word2SearchResult;
+                    compareResultsToReturn.LeastPopularWordSearchResult = word1SearchResult;
+                }
+
+                compareResultsToReturn.SearchElapsedSeconds = howLong.Elapsed.TotalSeconds;
+                
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+            return compareResultsToReturn;
+        }
+
+        private static WordSearchResult GetWordSearchResults(string searchWord)
+        {
+            List<Tweetinvi.Models.ITweet> tweetsContainingWord = TwitterAgent.Search.SearchByWord(searchWord).ToList();
+
+            WordSearchResult wordResult = new WordSearchResult
+            {
+                Word = searchWord,
+                AppearanceCount = tweetsContainingWord.Count
+            };
+
+            if (tweetsContainingWord.Count > 0)
+            {
+                wordResult.OldestTweetDateTime = tweetsContainingWord[tweetsContainingWord.Count - 1].CreatedAt;
+                wordResult.NewestTweetDateTime = tweetsContainingWord[0].CreatedAt;
             }
             else
             {
-                morePopularPhrase = string.Format(phrase2 + " is more popular with {0} appearances. " + phrase1 + " had {1} appearances. ", phrase2Results.Count.ToString(), phrase1Results.Count.ToString());
+                wordResult.OldestTweetDateTime = null;
+                wordResult.NewestTweetDateTime = null;
             }
 
-            morePopularPhrase = morePopularPhrase + string.Format("{0}Phrase1 OldestDate: {1}. Phrase1 NewestDate: {2}", Environment.NewLine,
-                phrase1ResultsOldestTweetDateTime.ToShortDateString() + " " + phrase1ResultsOldestTweetDateTime.ToShortTimeString(),
-                phrase1ResultsNewestTweetDateTime.ToShortDateString() + " " + phrase1ResultsNewestTweetDateTime.ToShortTimeString());
-
-
-            morePopularPhrase = morePopularPhrase + string.Format("{0}Phrase2 OldestDate: {1}. Phrase2 NewestDate: {2}", Environment.NewLine,
-                phrase2ResultsOldestTweetDateTime.ToShortDateString() + " " + phrase2ResultsOldestTweetDateTime.ToShortTimeString(),
-                phrase2ResultsNewestTweetDateTime.ToShortDateString() + " " + phrase2ResultsNewestTweetDateTime.ToShortTimeString());
-
-            howLong.Stop();
-
-            morePopularPhrase = morePopularPhrase + string.Format("{0}{0}Search took {1} seconds.", Environment.NewLine, howLong.Elapsed.TotalSeconds.ToString());
-
-            return morePopularPhrase;
+            return wordResult;
         }
     }
 }
