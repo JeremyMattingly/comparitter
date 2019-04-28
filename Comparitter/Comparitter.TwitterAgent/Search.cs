@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tweetinvi;
+using Tweetinvi.Parameters;
 
 namespace Comparitter.TwitterAgent
 {
@@ -62,7 +63,61 @@ namespace Comparitter.TwitterAgent
 
         public static IEnumerable<Tweetinvi.Models.ITweet> SearchByPhrase(string phrase)
         {
-            return Tweetinvi.Search.SearchTweets(phrase).ToList();
+            DateTime dateTimeNow = DateTime.Now;
+            DateTime oneDayAgo = dateTimeNow.AddDays(-1);
+            int maxNumberOfResults = 100;
+
+            List<Tweetinvi.Models.ITweet> tweetsToReturn = new List<Tweetinvi.Models.ITweet>();
+            long lastMaxId = 0;
+            bool twitterIsStillReturningResults = true;
+
+            int numberOfLoops = 0;
+
+            while (twitterIsStillReturningResults)
+            {
+                SearchTweetsParameters searchParameters;
+
+                if (lastMaxId == 0)
+                {
+                    searchParameters = new SearchTweetsParameters(phrase)
+                    {
+                        MaximumNumberOfResults = maxNumberOfResults//,
+                        //Since = oneDayAgo
+                        //Until = dateTimeNow
+                    };
+                }
+                else
+                {
+                    searchParameters = new SearchTweetsParameters(phrase)
+                    {
+                        MaximumNumberOfResults = maxNumberOfResults,
+                        //Since = oneDayAgo,
+                        //Until = dateTimeNow,
+                        MaxId = lastMaxId,
+                    };
+                }
+
+                var searchResults = Tweetinvi.Search.SearchTweets(searchParameters);
+
+                var searchResultsList = searchResults.ToList();
+
+                twitterIsStillReturningResults = searchResultsList.Count > 0;
+
+                if (twitterIsStillReturningResults)
+                {
+
+                    lastMaxId = searchResultsList[searchResultsList.Count - 1].Id - 1;
+
+                    tweetsToReturn.AddRange(searchResultsList);
+
+                }
+
+                numberOfLoops++;
+            }
+
+
+
+            return tweetsToReturn;
         }
 
         #endregion Public Methods
