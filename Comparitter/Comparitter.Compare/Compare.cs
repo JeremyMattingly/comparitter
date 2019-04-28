@@ -30,6 +30,15 @@ namespace Comparitter.Compare
 
     public class Compare
     {
+        /// <summary>
+        /// Takes two words and determines which is more popular on Twitter by how many tweets contain the word.
+        /// </summary>
+        /// <param name="searchWord1">The first word to search for.</param>
+        /// <param name="searchWord2">The second word to search for.</param>
+        /// <returns><see cref="WordCompareResult"/> of the comparison results.</returns>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="searchWord1"/> or <paramref name="searchWord2"/> is null, is only whitespace or contains a space.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="searchWord1"/> or <paramref name="searchWord2"/> length is over 500 characters.</exception>
+        /// <exception cref="Comparitter.Compare.Exception.CompareException">Thrown when an error occurrs while searching for one of the words.</exception>
         public static WordCompareResult CompareByAppearanceCount(string searchWord1, string searchWord2)
         {
             if (string.IsNullOrWhiteSpace(searchWord1))
@@ -115,6 +124,11 @@ namespace Comparitter.Compare
             return compareResultsToReturn;
         }
 
+        /// <summary>
+        /// Searches Twitter for tweets containg the specified search word and instantiates a new <see cref="WordSearchResult"/> with the results.
+        /// </summary>
+        /// <param name="searchWord">The word to search Twitter for.</param>
+        /// <returns><see cref="WordSearchResult"/> of the search results.</returns>
         private static WordSearchResult GetWordSearchResults(string searchWord)
         {
             List<Tweetinvi.Models.ITweet> tweetsContainingWord = TwitterAgent.Search.SearchByWord(searchWord).ToList();
