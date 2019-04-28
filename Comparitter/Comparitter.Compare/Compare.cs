@@ -8,26 +8,6 @@ using System.Timers;
 
 namespace Comparitter.Compare
 {
-    public struct WordSearchResult
-    {
-        public string Word { get; set; }
-        public DateTime? OldestTweetDateTime { get; set; }
-        public DateTime? NewestTweetDateTime { get; set; }
-        public int AppearanceCount { get; set; }
-    }
-
-    public struct WordCompareResult
-    {
-        public WordSearchResult MostPopularWordSearchResult { get; set; }
-        public WordSearchResult LeastPopularWordSearchResult { get; set; }
-
-        public bool WordsAreEquallyPopular { get; set; }
-
-        public List<WordSearchResult> EquallyPopularResults { get; set; }
-
-        public double SearchElapsedSeconds { get; set; }
-    }
-
     public class Compare
     {
         /// <summary>
@@ -71,7 +51,10 @@ namespace Comparitter.Compare
                 throw new ArgumentException("SearchByWord() does not support searching for phrases. Only single words are allowed.", nameof(searchWord2));
             }
 
-            WordCompareResult compareResultsToReturn = new WordCompareResult();
+            WordCompareResult compareResultsToReturn = new WordCompareResult
+            {
+                CompareDateTime = DateTime.Now
+            };
 
             Stopwatch howLong = new Stopwatch();
 
@@ -121,6 +104,8 @@ namespace Comparitter.Compare
                 throw;
             }
 
+            CompareHistory.SaveWordCompareResult(compareResultsToReturn);
+
             return compareResultsToReturn;
         }
 
@@ -136,7 +121,9 @@ namespace Comparitter.Compare
             WordSearchResult wordResult = new WordSearchResult
             {
                 Word = searchWord,
-                AppearanceCount = tweetsContainingWord.Count
+                AppearanceCount = tweetsContainingWord.Count,
+                SearchFailed = false,
+                SearchDateTime = DateTime.Now
             };
 
             if (tweetsContainingWord.Count > 0)

@@ -11,7 +11,6 @@ namespace Comparitter.Cli
     {
         static int menuItem = -1;
 
-
         static void Main(string[] args)
         {
             RunMenu();
@@ -33,6 +32,10 @@ namespace Comparitter.Cli
 
                         ComparePhrasePopularity(phrase1, phrase2);
                         break;
+
+                    case 2:
+                        RetrieveComparisonHistory();
+                        break;
                 }
 
                 Console.WriteLine();
@@ -42,6 +45,20 @@ namespace Comparitter.Cli
             }
 
             return;
+        }
+
+        private static void RunMenu()
+        {
+            Console.Clear();
+
+            Console.WriteLine("What do you want to do?");
+            Console.WriteLine("0. Exit.");
+            Console.WriteLine("1. Compare popularity for 2 phrases.");
+            Console.WriteLine("2. Retrieve comparison history.");
+
+            Console.WriteLine();
+            Console.WriteLine("Enter menu item number:");
+            menuItem = int.Parse(Console.ReadLine());
         }
 
         private static void ComparePhrasePopularity(string phrase1, string phrase2)
@@ -104,17 +121,29 @@ namespace Comparitter.Cli
             Console.WriteLine(morePopularWordResultText);
         }
 
-        private static void RunMenu()
+        private static void RetrieveComparisonHistory()
         {
             Console.Clear();
 
-            Console.WriteLine("What do you want to do?");
-            Console.WriteLine("0. Exit.");
-            Console.WriteLine("1. Compare popularity for 2 phrases.");
+            var history = Comparitter.Compare.CompareHistory.RetrieveWordCompareHistory();
 
-            Console.WriteLine();
-            Console.WriteLine("Enter menu item number:");
-            menuItem = int.Parse(Console.ReadLine());
+            foreach (var item in history)
+            {
+                string text = item.CompareDateTime.ToString() + " WordsAreEquallyPopular: " + item.WordsAreEquallyPopular.ToString();
+
+                if (item.WordsAreEquallyPopular)
+                {
+                    text += " Word1: " + item.EquallyPopularResults[0].Word;
+                    text += " Word2: " + item.EquallyPopularResults[1].Word;
+                }
+                else
+                {
+                    text += " MostPopularWord: " + item.MostPopularWordSearchResult.Word;
+                    text += " LeastPopularWord: " + item.LeastPopularWordSearchResult.Word;
+                }
+
+                Console.WriteLine(text);
+            }
         }
 
     }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AB0A7EC0-B661-40F9-AD72-5DA26B845848}</ProjectGuid>
+    <ProjectGuid>{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Comparitter.Compare</RootNamespace>
-    <AssemblyName>Comparitter.Compare</AssemblyName>
+    <RootNamespace>Comparitter.Database</RootNamespace>
+    <AssemblyName>Comparitter.Database</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,25 +40,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tweetinvi.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7247f14397bf67b9" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compare.cs" />
-    <Compile Include="CompareHistory.cs" />
-    <Compile Include="Exception\CompareException.cs" />
+    <Compile Include="GenericDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WordCompareResult.cs" />
-    <Compile Include="WordSearchResult.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Comparitter.Database\Comparitter.Database.csproj">
-      <Project>{8a3f5381-b011-4f8d-9ed7-8a91aa15c36c}</Project>
-      <Name>Comparitter.Database</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Comparitter.TwitterAgent\Comparitter.TwitterAgent.csproj">
-      <Project>{5bc37c86-c389-409a-b547-63c29a1d95ec}</Project>
-      <Name>Comparitter.TwitterAgent</Name>
-    </ProjectReference>
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

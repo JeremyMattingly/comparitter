@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Cli", "Comparit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Compare", "Comparitter.Compare\Comparitter.Compare.csproj", "{AB0A7EC0-B661-40F9-AD72-5DA26B845848}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparitter.Database", "Comparitter.Database\Comparitter.Database.csproj", "{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB0A7EC0-B661-40F9-AD72-5DA26B845848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A3F5381-B011-4F8D-9ED7-8A91AA15C36C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
