@@ -8,26 +8,6 @@ using System.Timers;
 
 namespace Comparitter.Compare
 {
-    public struct WordSearchResult
-    {
-        public string Word { get; set; }
-        public DateTime? OldestTweetDateTime { get; set; }
-        public DateTime? NewestTweetDateTime { get; set; }
-        public int AppearanceCount { get; set; }
-    }
-
-    public struct WordCompareResult
-    {
-        public WordSearchResult MostPopularWordSearchResult { get; set; }
-        public WordSearchResult LeastPopularWordSearchResult { get; set; }
-
-        public bool WordsAreEquallyPopular { get; set; }
-
-        public List<WordSearchResult> EquallyPopularResults { get; set; }
-
-        public double SearchElapsedSeconds { get; set; }
-    }
-
     public class Compare
     {
         /// <summary>

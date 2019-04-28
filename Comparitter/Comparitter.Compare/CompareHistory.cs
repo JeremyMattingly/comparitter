@@ -11,7 +11,9 @@ namespace Comparitter.Compare
     {
         public static void SaveWordCompareResult(WordCompareResult wordCompareResult)
         {
-
+            // save compare object
+            // save word 1 object
+            // save word 2 object
         }
 
         public static List<string> RetrieveWordCompareHistory()

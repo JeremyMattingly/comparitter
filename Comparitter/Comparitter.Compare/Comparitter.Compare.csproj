@@ -46,6 +46,8 @@
     <Compile Include="CompareHistory.cs" />
     <Compile Include="Exception\CompareException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordCompareResult.cs" />
+    <Compile Include="WordSearchResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comparitter.Database\Comparitter.Database.csproj">
