@@ -32,35 +32,6 @@ namespace Comparitter.TwitterAgent
 
         #region Public Methods
 
-        public static List<string> FirstContact()
-        {
-            var user = User.GetAuthenticatedUser();
-            var timelineTweets = Timeline.GetUserTimeline(user, 5);
-
-            List<string> tweetsToReturn = new List<string>();
-
-            foreach (var tweet in timelineTweets)
-            {
-                tweetsToReturn.Add(tweet.Text);
-            }
-
-            return tweetsToReturn;
-        }
-
-        public static List<string> GetTopThreeTweetTextByPhrase(string phrase)
-        {
-            var matchingTweets = Tweetinvi.Search.SearchTweets(phrase).ToList();
-
-            List<string> tweetsToReturn = new List<string>();
-
-            for (int i = 0; i < 3; i++)
-            {
-                tweetsToReturn.Add(matchingTweets[i].Text);
-            }
-
-            return tweetsToReturn;
-        }
-
         public static IEnumerable<Tweetinvi.Models.ITweet> SearchByPhrase(string phrase)
         {
             DateTime dateTimeNow = DateTime.Now;
@@ -99,12 +70,11 @@ namespace Comparitter.TwitterAgent
 
                 var searchResults = Tweetinvi.Search.SearchTweets(searchParameters);
 
-                var searchResultsList = searchResults.ToList();
-
-                twitterIsStillReturningResults = searchResultsList.Count > 0;
+                twitterIsStillReturningResults = searchResults != null && searchResults.Count() > 0;
 
                 if (twitterIsStillReturningResults)
                 {
+                    var searchResultsList = searchResults.ToList();
 
                     lastMaxId = searchResultsList[searchResultsList.Count - 1].Id - 1;
 
