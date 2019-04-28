@@ -51,7 +51,10 @@ namespace Comparitter.Compare
                 throw new ArgumentException("SearchByWord() does not support searching for phrases. Only single words are allowed.", nameof(searchWord2));
             }
 
-            WordCompareResult compareResultsToReturn = new WordCompareResult();
+            WordCompareResult compareResultsToReturn = new WordCompareResult
+            {
+                CompareDateTime = DateTime.Now
+            };
 
             Stopwatch howLong = new Stopwatch();
 
@@ -101,6 +104,8 @@ namespace Comparitter.Compare
                 throw;
             }
 
+            CompareHistory.SaveWordCompareResult(compareResultsToReturn);
+
             return compareResultsToReturn;
         }
 
@@ -116,7 +121,9 @@ namespace Comparitter.Compare
             WordSearchResult wordResult = new WordSearchResult
             {
                 Word = searchWord,
-                AppearanceCount = tweetsContainingWord.Count
+                AppearanceCount = tweetsContainingWord.Count,
+                SearchFailed = false,
+                SearchDateTime = DateTime.Now
             };
 
             if (tweetsContainingWord.Count > 0)

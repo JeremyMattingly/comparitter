@@ -11,9 +11,25 @@ namespace Comparitter.Compare
     {
         public static void SaveWordCompareResult(WordCompareResult wordCompareResult)
         {
-            // save compare object
-            // save word 1 object
-            // save word 2 object
+            if (wordCompareResult.WordsAreEquallyPopular)
+            {
+                List<WordSearchResult> savedWordSearchResults = new List<WordSearchResult>();
+
+                foreach (var item in wordCompareResult.EquallyPopularResults)
+                {
+                    WordSearchResult savedResult = item.Save();
+                    savedWordSearchResults.Add(savedResult);
+                }
+
+                wordCompareResult.EquallyPopularResults = savedWordSearchResults;
+            }
+            else
+            {
+                wordCompareResult.MostPopularWordSearchResult = wordCompareResult.MostPopularWordSearchResult.Save();
+                wordCompareResult.LeastPopularWordSearchResult = wordCompareResult.LeastPopularWordSearchResult.Save();
+            }
+
+            wordCompareResult.Save();
         }
 
         public static List<string> RetrieveWordCompareHistory()
