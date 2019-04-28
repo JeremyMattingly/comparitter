@@ -97,12 +97,20 @@ namespace Comparitter.Compare
                 compareResultsToReturn.SearchElapsedSeconds = howLong.Elapsed.TotalSeconds;
                 
             }
-            catch (Exception ex)
+            catch (Tweetinvi.Exceptions.TwitterException ex)
             {
+                //TODO: Would normally log this
+
+                string message = "Communication with Twitter failed for one of the word searches. This could be caused by a network issue, Twitter rate limit or a bad request.";
+
+                throw new Comparitter.Compare.Exception.CompareException(message, ex);
+            }
+            catch (System.Exception ex)
+            {
+                //TODO: Log this
 
                 throw;
             }
-
 
             return compareResultsToReturn;
         }
