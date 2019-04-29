@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Comparitter</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -13,6 +13,10 @@
                 <h1>Comparitter</h1>
                 <section>
                     <h2>Compare two words</h2>
+                    <p>Enter two different words to find out which is more popular on Twitter.</p>
+                    <p>Popularity is based on total number of tweets in which the words appear.</p>
+                    <p>The search goes back roughly 7 days. However if you choose popular words the time frame is much shorter.</p>
+                    <p><strong>The search can take several seconds for rare words.</strong> Popular words take a very long time and may time out using the free API.</p>
                     <asp:TextBox ID="Word1Tb" runat="server" />
                     <asp:TextBox ID="Word2Tb" runat="server" />
                     <asp:Button ID="CompareBtn" runat="server" Text="Compare" OnClick="CompareBtn_Click" />
