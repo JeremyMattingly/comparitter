@@ -1,0 +1,110 @@
+﻿@model Comparitter.WebMvc.ViewModels.ComparitterViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Comparitter</h1>
+@using (Html.BeginForm("Compare", "Home"))
+{
+    <section>
+        <h2>Compare Two Words</h2>
+        <p>Enter two different words to find out which is more popular on Twitter.</p>
+        <p>Popularity is based on total number of tweets in which the words appear.</p>
+        <p>The search goes back roughly 7 days. However if you choose popular words the time frame is much shorter.</p>
+        <p><strong>The search can take several seconds for rare words.</strong> Popular words take a very long time and may time out using the free API.</p>
+        <h3>Words To Compare</h3>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CompareForm.Word1)
+            @Html.TextBoxFor(m => m.CompareForm.Word1, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CompareForm.Word2)
+            @Html.TextBoxFor(m => m.CompareForm.Word2, new { @class = "form-control" })
+        </div>
+        <button type="submit" class="btn btn-primary">Compare</button>
+        @if (Model.CompareForm.DisplayValidationText)
+        {
+            <span class="text-danger">Input is not valid. Words must not be empty, not contain a space and be 500 characters or less.</span>
+        }
+    </section>
+    if (Model.CompareForm.DisplayResults)
+    {
+        <section>
+            <h3>Word Comparison Results</h3>
+            <div class="col-xs-6">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td>Word 1</td>
+                            <td>@Model.CompareForm.ResultWord1</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Appearances</td>
+                            <td>@Model.CompareForm.ResultWord1Appearances</td>
+                        </tr>
+                        <tr>
+                            <td>Date of oldest tweet</td>
+                            <td>@Model.CompareForm.ResultWord1DateOfOldestTweet</td>
+                        </tr>
+                        <tr>
+                            <td>Date of newest tweet</td>
+                            <td>@Model.CompareForm.ResultWord1DateOfNewestTweet</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <td>Word 2</td>
+                            <td>@Model.CompareForm.ResultWord2</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Appearances</td>
+                            <td>@Model.CompareForm.ResultWord2Appearances</td>
+                        </tr>
+                        <tr>
+                            <td>Date of oldest tweet</td>
+                            <td>@Model.CompareForm.ResultWord2DateOfOldestTweet</td>
+                        </tr>
+                        <tr>
+                            <td>Date of newest tweet</td>
+                            <td>@Model.CompareForm.ResultWord2DateOfNewestTweet</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+    }
+}
+<section>
+    <h2>History of Comparisons</h2>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Comparison Date</th>
+                <th>Elapsed Seconds</th>
+                <th>Words Are Equally Popular</th>
+                <th>Word 1</th>
+                <th>Word 1 Appearances</th>
+                <th>Word 2</th>
+                <th>Word 2 Appearances</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var comparison in Model.CompareHistory)
+            {
+                <tr>
+                    <td>@comparison.CompareDateTime</td>
+                    <td>@comparison.ElapsedSeconds</td>
+                    <td>@comparison.WordsAreEquallyPopular</td>
+                    <td>@comparison.Word1</td>
+                    <td>@comparison.Word1Appearances</td>
+                    <td>@comparison.Word2</td>
+                    <td>@comparison.Word2Appearances</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
