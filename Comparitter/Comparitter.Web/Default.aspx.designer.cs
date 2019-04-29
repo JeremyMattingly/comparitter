@@ -40,21 +40,129 @@ namespace Comparitter.Web {
         protected global::System.Web.UI.WebControls.TextBox Word2Tb;
         
         /// <summary>
-        /// CopmareBtn control.
+        /// CompareBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CopmareBtn;
+        protected global::System.Web.UI.WebControls.Button CompareBtn;
         
         /// <summary>
-        /// ResultsLbl control.
+        /// ValidationLbl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ResultsLbl;
+        protected global::System.Web.UI.WebControls.Label ValidationLbl;
+        
+        /// <summary>
+        /// CompareSection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CompareSection;
+        
+        /// <summary>
+        /// PopularityLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PopularityLbl;
+        
+        /// <summary>
+        /// SearchElapsedTimeLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SearchElapsedTimeLbl;
+        
+        /// <summary>
+        /// Word1Lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word1Lbl;
+        
+        /// <summary>
+        /// Word1AppearancesLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word1AppearancesLbl;
+        
+        /// <summary>
+        /// Word1OldestTweetDateLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word1OldestTweetDateLbl;
+        
+        /// <summary>
+        /// Word1NewestTweetDateLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word1NewestTweetDateLbl;
+        
+        /// <summary>
+        /// Word2Lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word2Lbl;
+        
+        /// <summary>
+        /// Word2AppearancesLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word2AppearancesLbl;
+        
+        /// <summary>
+        /// Word2OldestTweetDateLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word2OldestTweetDateLbl;
+        
+        /// <summary>
+        /// Word2NewestTweetDateLbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Word2NewestTweetDateLbl;
+        
+        /// <summary>
+        /// CompareHistoryGv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CompareHistoryGv;
     }
 }
