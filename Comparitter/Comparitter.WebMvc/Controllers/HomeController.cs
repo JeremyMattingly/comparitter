@@ -20,6 +20,7 @@ namespace Comparitter.WebMvc.Controllers
         }
 
         [HttpPost]
+        [Route("Home/Compare")]
         public ActionResult Compare(ComparitterViewModel viewModel)
         {
             string word1 = viewModel.CompareForm.Word1;
